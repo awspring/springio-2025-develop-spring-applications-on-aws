@@ -4,6 +4,7 @@ import io.awspring.cloud.dynamodb.DynamoDbOperations;
 import io.awspring.workshop.domain.Order;
 import io.awspring.workshop.domain.OrderRepository;
 import org.springframework.stereotype.Repository;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
 
 @Repository
 public class DynamoDbOrderRepository implements OrderRepository {
@@ -16,5 +17,10 @@ public class DynamoDbOrderRepository implements OrderRepository {
     @Override
     public void save(Order order) {
         dynamoDbOperations.save(order);
+    }
+
+    @Override
+    public Order findById(String id) {
+        return dynamoDbOperations.load(Key.builder().partitionValue(id).build(), Order.class);
     }
 }
