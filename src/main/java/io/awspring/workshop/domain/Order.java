@@ -1,19 +1,12 @@
 package io.awspring.workshop.domain;
 
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
-
 import java.math.BigDecimal;
 
-@DynamoDbBean
 public class Order {
     private String orderId;
     private String productName;
     private String userId;
     private BigDecimal amount;
-
-    public Order() {
-    }
 
     public Order(String orderId, String productName, String userId, BigDecimal amount) {
         this.orderId = orderId;
@@ -22,7 +15,6 @@ public class Order {
         this.amount = amount;
     }
 
-    @DynamoDbPartitionKey
     public String getOrderId() {
         return orderId;
     }
@@ -37,22 +29,6 @@ public class Order {
 
     public BigDecimal getAmount() {
         return amount;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
     }
 
     @Override

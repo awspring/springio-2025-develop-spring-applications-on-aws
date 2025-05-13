@@ -22,16 +22,9 @@ dependencies {
 
     implementation 'org.apache.pdfbox:pdfbox:3.0.5'
 
-    implementation platform('io.awspring.cloud:spring-cloud-aws-dependencies:3.3.0')
-    implementation 'io.awspring.cloud:spring-cloud-aws-starter-dynamodb'
-    implementation 'io.awspring.cloud:spring-cloud-aws-starter-sqs'
-    implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3'
-    implementation 'io.awspring.cloud:spring-cloud-aws-starter-sns'
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.testcontainers:junit-jupiter'
-    testImplementation 'io.awspring.cloud:spring-cloud-aws-testcontainers'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
