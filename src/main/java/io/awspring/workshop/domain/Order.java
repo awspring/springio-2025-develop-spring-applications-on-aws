@@ -30,4 +30,14 @@ public class Order {
     public BigDecimal getAmount() {
         return amount;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId='" + orderId + '\'' +
+                ", productName='" + productName + '\'' +
+                ", userId='" + userId + '\'' +
+                ", amount=" + amount +
+                '}';
+    }
 }
