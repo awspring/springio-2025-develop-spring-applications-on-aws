@@ -8,6 +8,9 @@ public class Order {
     private String userId;
     private BigDecimal amount;
 
+    public Order() {
+    }
+
     public Order(String orderId, String productName, String userId, BigDecimal amount) {
         this.orderId = orderId;
         this.productName = productName;
@@ -29,5 +32,31 @@ public class Order {
 
     public BigDecimal getAmount() {
         return amount;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId='" + orderId + '\'' +
+                ", productName='" + productName + '\'' +
+                ", userId='" + userId + '\'' +
+                ", amount=" + amount +
+                '}';
     }
 }
