@@ -1,7 +1,5 @@
 package io.awspring.workshop;
 
-import io.awspring.cloud.sns.sms.SnsSmsOperations;
-import io.awspring.cloud.sqs.annotation.SqsListener;
 import io.awspring.workshop.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,21 +12,19 @@ public class OrderListener {
     private final OrderRepository orderRepository;
     private final InvoiceFactory invoiceFactory;
     private final InvoiceRepository invoiceRepository;
-    private final SnsSmsOperations snsSmsOperations;
 
-    public OrderListener(OrderRepository orderRepository, InvoiceFactory invoiceFactory, InvoiceRepository invoiceRepository, SnsSmsOperations snsSmsOperations) {
+    public OrderListener(OrderRepository orderRepository, InvoiceFactory invoiceFactory, InvoiceRepository invoiceRepository) {
         this.orderRepository = orderRepository;
         this.invoiceFactory = invoiceFactory;
         this.invoiceRepository = invoiceRepository;
-        this.snsSmsOperations = snsSmsOperations;
     }
 
-    @SqsListener(queueNames = "order-queue")
+    // todo: listen for SQS message
     void handle(OrderCreated event) {
         LOGGER.info("Received event: {}", event);
         Order order = orderRepository.findById(event.orderId());
         Invoice invoice = invoiceFactory.invoiceFor(order);
         invoiceRepository.store(invoice);
-        snsSmsOperations.send("+48691948188", "invoice ready");
+        // todo: sent SMS
     }
 }

@@ -9,7 +9,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
 
 @RestController
 @RequestMapping("/orders")
@@ -35,19 +34,15 @@ public class OrderController {
 
     @GetMapping("/{orderId}/invoice")
     public ResponseEntity<Resource> invoice(@PathVariable String orderId) throws Exception {
-        try {
-            Resource resource = invoiceRepository.findByOrderId(orderId);
-            return ResponseEntity.ok()
-                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .contentLength(resource.contentLength())
-                    .header(HttpHeaders.CONTENT_DISPOSITION,
-                            ContentDisposition.attachment()
-                                    .filename(resource.getFilename())
-                                    .build().toString())
-                    .body(resource);
-        } catch (NoSuchKeyException e) {
-            return ResponseEntity.notFound().build();
-        }
+        Resource resource = invoiceRepository.findByOrderId(orderId);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .contentLength(resource.contentLength())
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        ContentDisposition.attachment()
+                                .filename(resource.getFilename())
+                                .build().toString())
+                .body(resource);
     }
 
 }
