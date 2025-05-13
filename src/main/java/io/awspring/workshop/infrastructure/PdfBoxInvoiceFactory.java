@@ -20,7 +20,7 @@ public class PdfBoxInvoiceFactory implements InvoiceFactory {
 
     @Override
     public Invoice invoiceFor(Order order) {
-        return new Invoice("invoice-" + order.getOrderId() + ".pdf", generateInvoicePdf(order));
+        return new Invoice(order, generateInvoicePdf(order));
     }
 
     private byte[] generateInvoicePdf(Order order) {

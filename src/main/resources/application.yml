@@ -9,3 +9,5 @@ spring:
       region:
         static: us-east-1
       endpoint: http://localhost:4566
+      s3:
+        path-style-access-enabled: true

@@ -12,10 +12,12 @@ public class OrderListener {
 
     private final OrderRepository orderRepository;
     private final InvoiceFactory invoiceFactory;
+    private final InvoiceRepository invoiceRepository;
 
-    public OrderListener(OrderRepository orderRepository, InvoiceFactory invoiceFactory) {
+    public OrderListener(OrderRepository orderRepository, InvoiceFactory invoiceFactory, InvoiceRepository invoiceRepository) {
         this.orderRepository = orderRepository;
         this.invoiceFactory = invoiceFactory;
+        this.invoiceRepository = invoiceRepository;
     }
 
     @SqsListener(queueNames = "order-queue")
@@ -23,6 +25,6 @@ public class OrderListener {
         LOGGER.info("Received event: {}", event);
         Order order = orderRepository.findById(event.orderId());
         Invoice invoice = invoiceFactory.invoiceFor(order);
-        // todo: store invoice in S3
+        invoiceRepository.store(invoice);
     }
 }
