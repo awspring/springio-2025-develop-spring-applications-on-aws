@@ -2,7 +2,7 @@
 
 # Create DynamoDB table
 awslocal dynamodb create-table \
-    --table-name Orders \
+    --table-name order \
     --attribute-definitions AttributeName=orderId,AttributeType=S \
     --key-schema AttributeName=orderId,KeyType=HASH \
     --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
