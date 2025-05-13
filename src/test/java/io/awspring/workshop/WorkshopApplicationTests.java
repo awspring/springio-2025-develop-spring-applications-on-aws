@@ -29,7 +29,7 @@ class WorkshopApplicationTests {
     private InvoiceRepository invoiceRepository;
 
     @Test
-    void contextLoads() throws InterruptedException {
+    void contextLoads() {
         Order order = new Order(UUID.randomUUID().toString(), "foo", "usId", BigDecimal.valueOf(20));
 
         orderService.createOrder(order);
