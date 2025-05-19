@@ -33,17 +33,14 @@ However, when listeners are created dynamically at runtime, Spring Cloud AWS doe
 To support this, the following changes should be introduced to the `QueueManagingService` class.
 
 ```java
-     @Autowired
-     private SqsAsyncClient sqsAsyncClient;
+ @Autowired
+ private SqsAsyncClient sqsAsyncClient;
 
-     public String createAndStartListener(String queueName) {
-        MessageListener<Invoice> myCustomListener = new InvoiceListener();
-        
-        SqsMessageListenerContainer.Builder<Invoice> builder = SqsMessageListenerContainer
-        .builder();
-        
-        SqsMessageListenerContainer<Invoice> container =
-        builder.sqsAsyncClient(sqsAsyncClient)
+ public String createAndStartListener(String queueName) {
+     MessageListener<Invoice> myCustomListener = new InvoiceListener();
+
+     SqsMessageListenerContainer<Invoice> container = SqsMessageListenerContainer.builder()
+         .sqsAsyncClient(sqsAsyncClient)
         .messageListener(myCustomListener)
         .configure(config -> 
             config.backPressureMode(BackPressureMode.FIXED_HIGH_THROUGHPUT)
@@ -51,10 +48,10 @@ To support this, the following changes should be introduced to the `QueueManagin
                   .maxMessagesPerPoll(10).maxConcurrentMessages(200))
         .queueNames(queueName)
         .build();
-        container.start();
-        containerCache.put(queueName, container);
-        return container.getId();
-        }
+     container.start();
+     containerCache.put(queueName, container);
+     return container.getId();
+}
 ```
 
 As you can see, various configurations can be applied at the container level—for example, the maximum number of messages to fetch in a single poll, 
@@ -68,7 +65,7 @@ To stop the listening from the queue change the implementation of `stopListener`
 
 ```java
  public String stopListener(String queueName) {
-        containerCache.get(queueName).stop();
-        return containerCache.get(queueName).getId();
-    }
+    containerCache.get(queueName).stop();
+    return containerCache.get(queueName).getId();
+}
  ```
