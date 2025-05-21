@@ -46,5 +46,9 @@ spring:
 
 What if downloaded invoice does not exist on S3? Update `findByOrderId` method to handle such case, as well as `OrderController` to return `404` when invoice is not found.
 
+## Signed URL
+
+Instead of transferring the invoice from S3 through the application, in `GET /order/{orderId}/invoice` controller method, create a signed `GET` url to download an image and redirect a request to the generated endpoint.
+
 ### 
 [Next](step-5-notify-user-about-generated-invoice.md)
