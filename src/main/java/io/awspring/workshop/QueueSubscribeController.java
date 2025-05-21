@@ -1,6 +1,5 @@
 package io.awspring.workshop;
 
-
 import io.awspring.workshop.service.QueueManagingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
