@@ -47,4 +47,4 @@ spring:
 What if downloaded invoice does not exist on S3? Update `findByOrderId` method to handle such case, as well as `OrderController` to return `404` when invoice is not found.
 
 ### 
-[Next](step-5-notify-user-about-generated-invoice)
+[Next](step-5-notify-user-about-generated-invoice.md)
