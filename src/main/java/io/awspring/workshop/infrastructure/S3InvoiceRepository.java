@@ -7,6 +7,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
+import java.net.URL;
+import java.time.Duration;
 
 @Component
 public class S3InvoiceRepository implements InvoiceRepository {
@@ -24,5 +26,10 @@ public class S3InvoiceRepository implements InvoiceRepository {
     @Override
     public Resource findByOrderId(String orderId) {
         return s3Operations.download("invoices", Invoice.fileNameFor(orderId));
+    }
+
+    @Override
+    public URL findGetUrlByOrderId(String orderId) {
+        return s3Operations.createSignedGetURL("invoices", Invoice.fileNameFor(orderId), Duration.ofMinutes(10));
     }
 }

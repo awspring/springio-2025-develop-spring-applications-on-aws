@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
 
+import java.net.URL;
+
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
@@ -50,4 +52,10 @@ public class OrderController {
         }
     }
 
+    @GetMapping(value = "{orderId}/invoice", produces = "application/json")
+    public InvoiceDto invoiceDto(@PathVariable String orderId) {
+        return new InvoiceDto(invoiceRepository.findGetUrlByOrderId(orderId));
+    }
+
+    public record InvoiceDto(URL url) {}
 }

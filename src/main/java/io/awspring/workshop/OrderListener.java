@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.net.URL;
+
 @Component
 public class OrderListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderListener.class);
@@ -29,6 +31,7 @@ public class OrderListener {
         Order order = orderRepository.findById(event.orderId());
         Invoice invoice = invoiceFactory.invoiceFor(order);
         invoiceRepository.store(invoice);
-        snsSmsOperations.send("+48691948188", "invoice ready");
+        URL signedUrl = invoiceRepository.findGetUrlByOrderId(event.orderId());
+        snsSmsOperations.send("+48691948188", "invoice ready: " + signedUrl);
     }
 }
