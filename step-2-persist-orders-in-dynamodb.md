@@ -5,7 +5,7 @@
 Add following dependencies to `build.gradle`:
 
 ```
-implementation platform('io.awspring.cloud:spring-cloud-aws-dependencies:3.3.0')
+implementation platform('io.awspring.cloud:spring-cloud-aws-dependencies:3.3.1')
 implementation 'io.awspring.cloud:spring-cloud-aws-starter-dynamodb'
 ```
 
