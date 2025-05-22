@@ -40,4 +40,4 @@ spring:
 We are not going to use `docker-compose.yml`. To start application locally, use `TestSpringCloudAwsWorkshopApplication` instead as it uses containers configured in `TestcontainersConfiguration` class.
 
 ### 
-[Next](step-7-bonus-create-sqs-listeners-on-demand)
+[Next](step-7-bonus-create-sqs-listeners-on-demand.md)
