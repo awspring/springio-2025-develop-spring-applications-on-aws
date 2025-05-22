@@ -38,16 +38,23 @@ Time to update `OrderListener` to make our application more robust and performan
 
 1. Change default visibility timeout of messages processed by `@SqsListener` to 200.
 
+<details>
+<summary>Solution</summary>
 
 ```java
 @SqsListener(queueNames = "order-queue", messageVisibilitySeconds = "200")
 ```
+</details>
 
 2. Increase throughput of `@SqsListener` by increasing number of in concurrent messages to 20 and increase max messages polled to 10
+
+<details>
+<summary>Solution</summary>
 
 ```java
 @SqsListener(queueNames = "order-queue", maxConcurrentMessages = "30",  maxMessagesPerPoll = "10")
 ```
+</details>
 
 ### 
 [Next](step-4-store-invoices-in-s3.md)
