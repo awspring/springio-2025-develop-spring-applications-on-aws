@@ -14,14 +14,21 @@ implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3'
 
 Update `S3InvoiceRepository#store` method to use `S3Operations#upload`. Since invoice is generated to a byte array, use `ByteArrayInputStream`:
 
+<details>
+<summary>Solution</summary>
+
 ```java
 @Override
 public void store(Invoice invoice) {
     s3Operations.upload("invoices", invoice.fileName(), new ByteArrayInputStream(invoice.content()));
 }
 ```
+</details>
 
 Similarly, implement `findByOrderId` to download a file from S3:
+
+<details>
+<summary>Solution</summary>
 
 ```java
 @Override
@@ -29,6 +36,7 @@ public Resource findByOrderId(String orderId) {
     return s3Operations.download("invoices", Invoice.fileNameFor(orderId));
 }
 ```
+</details>
 
 ## Enable `path-style-access`
 
@@ -44,7 +52,33 @@ spring:
 
 ## Handle file not found
 
-What if downloaded invoice does not exist on S3? Update `findByOrderId` method to handle such case, as well as `OrderController` to return `404` when invoice is not found.
+What if downloaded invoice does not exist on S3? Update `OrderController` to handle such case and return `404` when invoice is not found. 
+
+**Hint** take a look at `S3Resource#exists` method.
+
+<details>
+<summary>Solution</summary>
+
+```java
+@GetMapping("/{orderId}/invoice")
+public ResponseEntity<Resource> invoice(@PathVariable String orderId) throws Exception {
+    Resource resource = invoiceRepository.findByOrderId(orderId);
+    if (resource.exists()) {
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .contentLength(resource.contentLength())
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        ContentDisposition.attachment()
+                                .filename(resource.getFilename())
+                                .build().toString())
+                .body(resource);
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+}
+```
+
+</details>
 
 ## Signed URL
 
