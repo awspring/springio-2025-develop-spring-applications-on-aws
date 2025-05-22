@@ -52,6 +52,7 @@ Instead of transferring the invoice from S3 through the application, in `GET /or
 
 <details>
 <summary>Solution</summary>
+
 ```java
 @Override
 public URL findGetUrlByOrderId(String orderId) {
