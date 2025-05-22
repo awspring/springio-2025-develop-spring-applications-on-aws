@@ -46,7 +46,7 @@ public class OrderController {
                 .body(resource);
     }
 
-    @GetMapping("/{orderId}/invoice")
+    @GetMapping("/{orderId}/invoice-redirect")
     public RedirectView invoiceRedirect(@PathVariable String orderId) {
         var url = invoiceRepository.findGetUrlByOrderId(orderId);
         return new RedirectView(url.toString());
