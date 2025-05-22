@@ -7,8 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.net.URL;
-
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
@@ -32,15 +30,8 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}/invoice")
-    public RedirectView invoice(@PathVariable String orderId) throws Exception {
+    public RedirectView invoice(@PathVariable String orderId) {
         var url = invoiceRepository.findGetUrlByOrderId(orderId);
         return new RedirectView(url.toString());
     }
-
-    @GetMapping(value = "{orderId}/invoice", produces = "application/json")
-    public InvoiceDto invoiceDto(@PathVariable String orderId) {
-        return new InvoiceDto(invoiceRepository.findGetUrlByOrderId(orderId));
-    }
-
-    public record InvoiceDto(URL url) {}
 }
