@@ -35,7 +35,6 @@ Unlike most of the datastores implementation you might be familiar from the Spri
 
 - annotate `Order` class with `@DynamoDbBean`
 - mark entity's primary key: annotate `getUserId` with `@DynamoDbPartitionKey`
-- mark entity's sort key: annotate `getOrderId` with `@DynamoDbSortKey`
 - `@DynamoDBBean` (unfortunately) requires setters and default constructor, update the class to conform with this requirements
 
 ## Persist orders with `DynamoDbOperations`
