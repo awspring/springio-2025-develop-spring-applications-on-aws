@@ -3,13 +3,9 @@ package io.awspring.workshop;
 import io.awspring.workshop.domain.InvoiceRepository;
 import io.awspring.workshop.domain.Order;
 import io.awspring.workshop.service.OrderService;
-import org.springframework.core.io.Resource;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequestMapping("/orders")
@@ -34,20 +30,8 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}/invoice")
-    public ResponseEntity<Resource> invoice(@PathVariable String orderId) throws Exception {
-        try {
-            Resource resource = invoiceRepository.findByOrderId(orderId);
-            return ResponseEntity.ok()
-                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .contentLength(resource.contentLength())
-                    .header(HttpHeaders.CONTENT_DISPOSITION,
-                            ContentDisposition.attachment()
-                                    .filename(resource.getFilename())
-                                    .build().toString())
-                    .body(resource);
-        } catch (NoSuchKeyException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public RedirectView invoice(@PathVariable String orderId) {
+        var url = invoiceRepository.findGetUrlByOrderId(orderId);
+        return new RedirectView(url.toString());
     }
-
 }
