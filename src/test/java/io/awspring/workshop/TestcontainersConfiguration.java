@@ -13,7 +13,7 @@ class TestcontainersConfiguration {
     @ServiceConnection
     @Bean
     LocalStackContainer localStackContainer() {
-        return new LocalStackContainer(DockerImageName.parse("localstack/localstack:4.4.0"))
+        return new LocalStackContainer(DockerImageName.parse("localstack/localstack:3.8.1"))
                 .withCopyFileToContainer(MountableFile.forClasspathResource("init-localstack.sh", 0744), "/etc/localstack/init/ready.d/init-aws.sh");
     }
 
