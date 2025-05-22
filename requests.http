@@ -1,0 +1,15 @@
+### Hello World
+GET http://localhost:8080/orders/hello
+Accept: application/json
+
+### Create an order
+
+POST http://localhost:8080/orders
+Content-Type: application/json
+
+{
+  "orderId": "42",
+  "productName": "MacBook Pro",
+  "userId": "1",
+  "amount": 250
+}
