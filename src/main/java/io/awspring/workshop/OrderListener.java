@@ -1,6 +1,7 @@
 package io.awspring.workshop;
 
 import io.awspring.cloud.sns.sms.SnsSmsOperations;
+import io.awspring.cloud.sqs.annotation.SnsNotificationMessage;
 import io.awspring.cloud.sqs.annotation.SqsListener;
 import io.awspring.workshop.domain.*;
 import org.slf4j.Logger;
@@ -23,8 +24,10 @@ public class OrderListener {
         this.snsSmsOperations = snsSmsOperations;
     }
 
-    @SqsListener(queueNames = "order-queue")
-    void handle(OrderCreated event) {
+//    @SqsListener(queueNames = "order-queue")
+//    void handle(OrderCreated event) {
+    @SqsListener(queueNames = "order-created-queue")
+    void handle(@SnsNotificationMessage OrderCreated event) {
         LOGGER.info("Received event: {}", event);
         Order order = orderRepository.findById(event.orderId());
         Invoice invoice = invoiceFactory.invoiceFor(order);

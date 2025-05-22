@@ -25,7 +25,8 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<String> createOrder(@RequestBody Order order) {
-        orderService.createOrder(order);
+        // orderService.createOrder(order);
+        orderService.createOrderInSns(order);
         return ResponseEntity.ok("Order saved with ID: " + order.getOrderId());
     }
 
