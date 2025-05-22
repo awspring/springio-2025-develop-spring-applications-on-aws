@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequestMapping("/orders")
@@ -43,6 +44,12 @@ public class OrderController {
                                 .filename(resource.getFilename())
                                 .build().toString())
                 .body(resource);
+    }
+
+    @GetMapping("/{orderId}/invoice-redirect")
+    public RedirectView invoiceRedirect(@PathVariable String orderId) {
+        var url = invoiceRepository.findGetUrlByOrderId(orderId);
+        return new RedirectView(url.toString());
     }
 
 }
