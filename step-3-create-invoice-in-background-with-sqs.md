@@ -32,5 +32,22 @@ Update `OrderListener` to listen from SQS. Annotate `handle` meethod with:
 @SqsListener(queueNames = "order-queue")
 ```
 
+## Bonus tasks!!
+
+Time to update `OrderListener` to make our application more robust and performant!
+
+1. Change default visibility timeout of messages processed by `@SqsListener` to 200.
+
+
+```java
+@SqsListener(queueNames = "order-queue", messageVisibilitySeconds = "200")
+```
+
+2. Increase throughput of `@SqsListener` by increasing number of in concurrent messages to 20 and increase max messages polled to 10
+
+```java
+@SqsListener(queueNames = "order-queue", maxConcurrentMessages = "30",  maxMessagesPerPoll = "10")
+```
+
 ### 
 [Next](step-4-store-invoices-in-s3.md)
