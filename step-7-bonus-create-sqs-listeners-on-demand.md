@@ -39,7 +39,8 @@ To support this, the following changes should be introduced to the `QueueManagin
  public String createAndStartListener(String queueName) {
      MessageListener<Invoice> myCustomListener = new InvoiceListener();
 
-     SqsMessageListenerContainer<Invoice> container = SqsMessageListenerContainer.builder()
+     SqsMessageListenerContainer.Builder builder = SqsMessageListenerContainer.builder();
+        SqsMessageListenerContainer<Invoice> container = builder
          .sqsAsyncClient(sqsAsyncClient)
         .messageListener(myCustomListener)
         .configure(config -> 

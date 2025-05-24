@@ -20,7 +20,7 @@ Add a dependency to `SqsTemplate` in `OrderService` and update the `createOrder`
 ```java
 public void createOrder(Order order) {
     orderRepository.save(order);
-    sqsTemplate.send("order-queue", new OrderCreated(order.getOrderId()));
+    sqsTemplate.send("order-created-queue", new OrderCreated(order.getOrderId()));
 }
 ```
 
@@ -29,7 +29,7 @@ public void createOrder(Order order) {
 Update `OrderListener` to listen from SQS. Annotate `handle` meethod with:
 
 ```java
-@SqsListener(queueNames = "order-queue")
+@SqsListener(queueNames = "order-created-queue")
 ```
 
 ## Bonus tasks!!
@@ -42,7 +42,7 @@ Time to update `OrderListener` to make our application more robust and performan
 <summary>Solution</summary>
 
 ```java
-@SqsListener(queueNames = "order-queue", messageVisibilitySeconds = "200")
+@SqsListener(queueNames = "order-created-queue", messageVisibilitySeconds = "200")
 ```
 </details>
 
@@ -52,7 +52,7 @@ Time to update `OrderListener` to make our application more robust and performan
 <summary>Solution</summary>
 
 ```java
-@SqsListener(queueNames = "order-queue", maxConcurrentMessages = "30",  maxMessagesPerPoll = "10")
+@SqsListener(queueNames = "order-created-queue", maxConcurrentMessages = "30",  maxMessagesPerPoll = "10")
 ```
 </details>
 

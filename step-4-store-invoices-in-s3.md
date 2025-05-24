@@ -82,7 +82,7 @@ public ResponseEntity<Resource> invoice(@PathVariable String orderId) throws Exc
 
 ## Signed URL
 
-Instead of transferring the invoice from S3 through the application, in `GET /order/{orderId}/invoice` controller method, create a signed `GET` url to download an image and redirect a request to the generated endpoint.
+Instead of transferring the invoice from S3 through the application, in `GET /orders/{orderId}/invoice-redirect` controller method, create a signed `GET` url to download an image and redirect a request to the generated endpoint.
 
 <details>
 <summary>Solution</summary>
